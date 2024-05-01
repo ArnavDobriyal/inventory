@@ -9,7 +9,7 @@ templates = Jinja2Templates(directory="clgproject\inventory")
 
 class AuthorizationLevel(str, Enum):
     OWNER = "owner"
-    CUSTOMER = "customer"
+    CUSTOMER = "customer."
 
 @app.get("/", response_class=HTMLResponse)
 async def login_page(request: Request):
