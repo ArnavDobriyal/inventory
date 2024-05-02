@@ -7,7 +7,7 @@ from insert_sql import insert_customer,insert_item,insert_inventory,insert_reple
 from retrive import retrive_customer_item,retrive_customer_detials,retrive_owner_item,retrive_customer_replenish,retrive_owner_replenish
 from deletion import delete_customer,delete_item,delete_inventory
 from inventorys import total,small,large,fridge
-
+from db.database_operations import insert_data
 app = FastAPI()
 templates = Jinja2Templates(directory="clgproject\inventory\html_files")
 
