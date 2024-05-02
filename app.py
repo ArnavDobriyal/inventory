@@ -2,7 +2,10 @@ from fastapi import FastAPI, Form, HTTPException, Request, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from enum import Enum
-from database_operations import authenticate_user, create_table, insert_data, fetch_data
+from database_operations import authenticate_user, create_table, insert_data_, fetch_data
+from insert_sql import insert_customer,insert_item,insert_inventory,insert_replenish\
+from retrive import retrive_customer_item,retrive_customer_detials,retrive_owner_item,retrive_customer_replenish,retrive_owner_replenish
+from deletion import delete_customer,delete_item,delete_inventory
 
 app = FastAPI()
 templates = Jinja2Templates(directory="clgproject\inventory")
@@ -22,7 +25,7 @@ async def signup_page(request: Request):
 # Route to handle form submissions from the signup page
 @app.post("/signup")
 async def signup(request: Request, name: str = Form(...), age: int = Form(...), phone_number: str = Form(...), email: str = Form(...), password: str = Form(...)):
-    insert_data(name, age, phone_number, email, password)
+    insert_data_user(name, age, phone_number, email, password)
     return RedirectResponse("/", status_code=303)
 
 @app.post("/login")
