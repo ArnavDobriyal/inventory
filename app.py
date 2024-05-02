@@ -2,7 +2,7 @@ from fastapi import FastAPI, Form, HTTPException, Request, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from enum import Enum
-from database_operations import authenticate_user, create_table, insert_data_, fetch_data
+from auth import authenticate_user
 from insert_sql import insert_customer,insert_item,insert_inventory,insert_replenish\
 from retrive import retrive_customer_item,retrive_customer_detials,retrive_owner_item,retrive_customer_replenish,retrive_owner_replenish
 from deletion import delete_customer,delete_item,delete_inventory
