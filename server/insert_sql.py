@@ -55,3 +55,31 @@ def print_customers():
     except mysql.connector.Error as err:
         print("Error:", err)
 
+def insert_item(name, quantity, size, expiry):
+    """
+    Function to insert a new item into the database and associate it with users.
+    """
+    item_id = generate_random_id()
+    while not is_item_id_unique(item_id):
+        item_id = generate_random_id()
+    try:
+        cursor.execute("INSERT INTO items (id, name, quantity, size, expiry) VALUES (%s, %s, %s, %s, %s)",
+                       (item_id, name, quantity, size, expiry))
+        conn.commit()
+        
+        # Update the customers table with the item_id for the associated customer
+        cursor.execute("UPDATE customers SET item_id = %s WHERE id = %s", (item_id, customer_id))
+        conn.commit()
+        
+        return item_id  # Return the generated item ID
+    except mysql.connector.Error:
+        return None  # Failed to insert item
+    
+def is_item_id_unique(item_id):
+    """
+    Function to check if the generated item ID is unique in the database.
+    """
+    cursor.execute("SELECT COUNT(*) FROM items WHERE id = %s", (item_id,))
+    count = cursor.fetchone()[0]
+    return count == 0    
+
