@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from enum import Enum
 from auth import authenticate_user
-from insert_sql import insert_customer,insert_item,insert_inventory,insert_replenish\
+from insert_sql import insert_customer,insert_item,insert_inventory,insert_replenish
 from retrive import retrive_customer_item,retrive_customer_detials,retrive_owner_item,retrive_customer_replenish,retrive_owner_replenish
 from deletion import delete_customer,delete_item,delete_inventory
 
@@ -12,7 +12,6 @@ templates = Jinja2Templates(directory="clgproject\inventory")
 
 class AuthorizationLevel(str, Enum):
     OWNER = "owner"
-    CUSTOMER = "customer."
 
 @app.get("/", response_class=HTMLResponse)
 async def login_page(request: Request):
@@ -25,7 +24,7 @@ async def signup_page(request: Request):
 # Route to handle form submissions from the signup page
 @app.post("/signup")
 async def signup(request: Request, name: str = Form(...), age: int = Form(...), phone_number: str = Form(...), email: str = Form(...), password: str = Form(...)):
-    insert_data_user(name, age, phone_number, email, password)
+    insert_customer(name, age, phone_number, email, password)
     return RedirectResponse("/", status_code=303)
 
 @app.post("/login")
@@ -40,10 +39,8 @@ async def login(request: Request, username: str = Form(...), password: str = For
 async def dashboard(request: Request, user: dict = Depends(authenticate_user)):
     if user["authorization_level"] == AuthorizationLevel.OWNER:
         return templates.TemplateResponse("dashboard_owner.html", {"request": request, "user": user})
-    elif user["authorization_level"] == AuthorizationLevel.CUSTOMER:
-        return templates.TemplateResponse("dashboard_customer.html", {"request": request, "user": user})
     else:
-        raise HTTPException(status_code=403, detail="Unauthorized")
+        return templates.TemplateResponse("dashboard_customer.html", {"request": request, "user": user})
 
 @app.post("/process-form/")
 async def process_form(user: dict = Depends(authenticate_user), name: str = Form(...), description: str = Form(...)):

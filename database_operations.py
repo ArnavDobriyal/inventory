@@ -1,5 +1,5 @@
-from models import User
 import mysql.connector
+from pydantic import BaseModel
 
 conn = mysql.connector.connect(
     host="localhost",
@@ -11,7 +11,10 @@ conn = mysql.connector.connect(
 
 c = conn.cursor()
 
-# Function to authenticate a user against the database
+class User(BaseModel):
+    username: str
+    password: str
+    authorization_level: str
 def authenticate_user(username: str, password: str) -> User:
     c.execute("SELECT * FROM users WHERE username=%s AND password=%s", (username, password))
     user_data = c.fetchone()
@@ -20,7 +23,6 @@ def authenticate_user(username: str, password: str) -> User:
     else:
         return None
 
-# Function to create a table in the database
 def create_table(name: str, description: str) -> bool:
     try:
         c.execute(f"CREATE TABLE IF NOT EXISTS {name} (id INTEGER PRIMARY KEY, description TEXT)")
