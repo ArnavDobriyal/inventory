@@ -9,7 +9,7 @@ from deletion import delete_customer,delete_item,delete_inventory
 from inventorys import total,small,large,fridge
 
 app = FastAPI()
-templates = Jinja2Templates(directory="clgproject\inventory")
+templates = Jinja2Templates(directory="clgproject\inventory\html_files")
 
 
 @app.get("/", response_class=HTMLResponse)
