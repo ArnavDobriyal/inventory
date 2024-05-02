@@ -6,6 +6,7 @@ from auth import authenticate
 from insert_sql import insert_customer,insert_item,insert_inventory,insert_replenish
 from retrive import retrive_customer_item,retrive_customer_detials,retrive_owner_item,retrive_customer_replenish,retrive_owner_replenish
 from deletion import delete_customer,delete_item,delete_inventory
+from inventorys import total,small,large,fridge
 
 app = FastAPI()
 templates = Jinja2Templates(directory="clgproject\inventory")
@@ -41,6 +42,25 @@ async def dashboard(request: Request, user: str = None):
         return templates.TemplateResponse("dashboard_customer.html", {"request": request, "user": user})
     else:
         return RedirectResponse("/", status_code=303)
+
+@app.get("/inventoryowner", response_class=HTMLResponse)
+async def inventorycustomer(request: Request):
+    total_filled_table = total()
+    small_filled_table = small()
+    large_filled_table = large()
+    fridge_filled_table = fridge()
+    return templates.TemplateResponse(
+        "inventoryowner.html",
+        {"request": request, "total_filled": total_filled_table, "small_filled_table": small_filled_table, "large_filled_table": large_filled_table, "fridge_filled_table": fridge_filled_table}
+    )
+
+@app.get("/replenishcustomer", response_class=HTMLResponse)
+async def inventorycustomer(request: Request):
+    total_itmes_table = itemtable(user_id)
+    return templates.TemplateResponse(
+        "inventoryowner.html",
+        {"request": request, "total_filled": total_filled, "small_filled": small_filled, "large_filled": large_filled, "fridge_filled": fridge_filled}
+    )
 
 
 if __name__ == "__main__":
