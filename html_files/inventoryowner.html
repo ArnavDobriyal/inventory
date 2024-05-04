@@ -4,71 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory Owner</title>
+    <style>
+        .table-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .table-container table {
+            border-collapse: collapse;
+            width: 48%; /* Adjust width as needed */
+        }
+
+        .table-container th, .table-container td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        .table-container th {
+            background-color: #f2f2f2;
+        }
+
+        .table-container tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table-container tr:hover {
+            background-color: #dddddd;
+        }
+    </style>
 </head>
 <body>
     <h1>Inventory Owner</h1>
 
     <h2>Total Filled Items: {{ total_filled }}</h2>
 
-    <h2>Small Filled Table</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Column 1</th>
-                <th>Column 2</th>
-                <!-- Add more column headers if needed -->
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in small_filled_table %}
-            <tr>
-                <td>{{ row.column1 }}</td>
-                <td>{{ row.column2 }}</td>
-                <!-- Add more columns if needed -->
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-container">
+        <div>
+            <h2>Small Filled Table</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Item</th>
+                        <!-- Add more column headers if needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in small_filled_table %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <!-- Add more columns if needed -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-    <h2>Large Filled Table</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Column 1</th>
-                <th>Column 2</th>
-                <!-- Add more column headers if needed -->
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in large_filled_table %}
-            <tr>
-                <td>{{ row.column1 }}</td>
-                <td>{{ row.column2 }}</td>
-                <!-- Add more columns if needed -->
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <div>
+            <h2>Large Filled Table</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Item</th>
+                        <!-- Add more column headers if needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in large_filled_table %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <!-- Add more columns if needed -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <h2>Fridge Filled Table</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Column 1</th>
-                <th>Column 2</th>
-                <!-- Add more column headers if needed -->
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in fridge_filled_table %}
-            <tr>
-                <td>{{ row.column1 }}</td>
-                <td>{{ row.column2 }}</td>
-                <!-- Add more columns if needed -->
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-container">
+        <div>
+            <h2>Fridge Filled Table</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Item</th>
+                        <!-- Add more column headers if needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in fridge_filled_table %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <!-- Add more columns if needed -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </body>
 </html>

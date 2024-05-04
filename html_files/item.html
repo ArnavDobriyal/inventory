@@ -3,37 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Item</title>
+    <title>Add New Item</title>
 </head>
 <body>
-    <h1>Add Item</h1>
-    <form method="post">
+    <h1>Add New Item</h1>
+    <form method="post" action="/insert_item">
         <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name"><br><br>
+        <input type="text" id="name" name="name"><br>
         
         <label for="expiry">Expiry:</label><br>
-        <input type="date" id="expiry" name="expiry"><br><br>
+        <input type="date" id="expiry" name="expiry"><br>
         
         <label for="size">Size:</label><br>
         <select id="size" name="size">
             <option value="large">Large</option>
             <option value="small">Small</option>
             <option value="fridge">Fridge</option>
-        </select><br><br>
+        </select><br>
         
         <label for="position">Position:</label><br>
-        <input type="number" id="position" name="position"><br><br>
+        <input type="number" id="position" name="position"><br>
         
         <label for="quantity">Quantity:</label><br>
-        <input type="number" id="quantity" name="quantity"><br><br>
+        <input type="number" id="quantity" name="quantity"><br>
         
         <label for="perishable">Perishable:</label><br>
-        <input type="checkbox" id="perishable" name="perishable"><br><br>
+        <input type="checkbox" id="perishable" name="perishable" value="1"><br>
         
         <label for="type">Type:</label><br>
-        <input type="text" id="type" name="type"><br><br>
+        <select id="type" name="type">
+            <option value="veg">Vegetarian</option>
+            <option value="nonveg">Non-Vegetarian</option>
+        </select><br>
         
-        <button type="submit">Add Item</button>
+        <input type="submit" value="Submit">
     </form>
 </body>
 </html>

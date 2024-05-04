@@ -11,28 +11,34 @@ conn = mysql.connector.connect(
 )
 cursor = conn.cursor()
 
-def retrieve_customer_details():
+def retrieve_owner_item():
     """
     Method to retrieve the list of all customer details from the database.
     """
     try:
-        # Retrieve all customer details
-        cursor.execute("SELECT * FROM customers")
-        customer_details = cursor.fetchall()
-        return customer_details
+        # Retrieve all item details
+        cursor.execute("SELECT * FROM items")
+        all_items = cursor.fetchall()
+        return all_items
     except mysql.connector.Error:
         return None  # Error occurred while retrieving customer details
 
-def retrieve_owner_item():
+def retrieve_customer_item(user):
     """
     Method to allow the owner to see the name of the customer and the list of items they have by matching the item_id in both databases.
     """
     try:
         # Retrieve customer name and their items by joining customers and items tables on item_id
-        cursor.execute("SELECT c.name, i.* FROM customers c JOIN items i ON c.item_id = i.id")
-        owner_items = cursor.fetchall()
-        return owner_items
+        cursor.execute("SELECT * from items where custid=%s",(user,))
+        items = cursor.fetchall()
+        return items
     except mysql.connector.Error:
         return None  # Error occurred while retrieving owner items
 
-
+def retrieve_cust_detail():
+    try:
+        cursor.execute("select * from customer")
+        cust=cursor.fetchall()
+        return cust
+    except mysql.connector.Error:
+        return None

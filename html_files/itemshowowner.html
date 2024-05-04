@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner's Inventory</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Owner's Inventory</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Item ID</th>
+                <th>Name</th>
+                <th>Expiry</th>
+                <th>Size</th>
+                <th>Position</th>
+                <th>Quantity</th>
+                <th>Perishable</th>
+                <th>Type</th>
+                <th>Customer ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.itemid }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.expiry }}</td>
+                <td>{{ item.size }}</td>
+                <td>{{ item.position }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.perishable }}</td>
+                <td>{{ item.type }}</td>
+                <td>{{ item.custid }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

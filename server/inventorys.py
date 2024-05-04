@@ -13,7 +13,7 @@ cursor = conn.cursor()
 def total():
     try:
         # Fetch details of the small table from the inventory database
-        cursor.execute("SELECT COUNT(id) FROM large WHERE item IS NULL")
+        cursor.execute("SELECT COUNT(id) FROM large WHERE itemid IS NOT NULL")
         small_table_details = cursor.fetchone()  # Fetch the first row
         if small_table_details:
             return small_table_details[0]  # Return the count of items
@@ -28,7 +28,7 @@ def small():
     """
     try:
         # Fetch details of the small table from the inventory database
-        cursor.execute("SELECT * FROM small")
+        cursor.execute("SELECT * FROM small where itemid is not null")
         small_table_details = cursor.fetchall()
         return small_table_details
     except mysql.connector.Error:
@@ -40,7 +40,7 @@ def fridge():
     """
     try:
         # Fetch details of the fridge table from the inventory database
-        cursor.execute("SELECT * FROM fridge")
+        cursor.execute("SELECT * FROM fridge where itemid is not null")
         fridge_table_details = cursor.fetchall()
         return fridge_table_details
     except mysql.connector.Error:
@@ -52,7 +52,7 @@ def large():
     """
     try:
         # Fetch details of the large table from the inventory database
-        cursor.execute("SELECT * FROM large")
+        cursor.execute("SELECT * FROM large where itemid is not null")
         large_table_details = cursor.fetchall()
         return large_table_details
     except mysql.connector.Error:

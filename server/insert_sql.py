@@ -61,7 +61,7 @@ def is_item_id_unique(item_id):
     count = cursor.fetchone()[0]
     return count == 0 
 
-def insert_item(name, expiry, size, position, quantity, perishable, type):
+def insert_item(name, expiry, size, position, quantity, perishable, type,user_id):
     """
     Function to insert a new item into the database.
     """
@@ -69,8 +69,8 @@ def insert_item(name, expiry, size, position, quantity, perishable, type):
     while not is_item_id_unique(item_id):
         item_id = generate_random_id()
     try:
-        cursor.execute("INSERT INTO items (itemid, name, expiry, size, position, quantity, perishable, type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                       (item_id, name, expiry, size, position, quantity, perishable, type))
+        cursor.execute("INSERT INTO items (itemid, name, expiry, size, position, quantity, perishable, type,custid) VALUES (%s,%s, %s, %s, %s, %s, %s, %s, %s)",
+                       (item_id, name, expiry, size, position, quantity, perishable, type,user_id))
         conn.commit()
         return item_id  # Return the generated item ID
     except mysql.connector.Error:
