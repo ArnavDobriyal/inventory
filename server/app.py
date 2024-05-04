@@ -115,10 +115,11 @@ async def add_item(request: Request, name: str = Form(...),expiry: str = Form(..
 
 
 
-@app.post("/itemsshowcustomer", response_class=HTMLResponse)
+@app.get("/itemsshowcustomer", response_class=HTMLResponse)
 async def item_form(request: Request):
     user_id = session_manager.user
     items=retrieve_customer_item(user_id)
+    print(items)
     return templates.TemplateResponse(
         "itemshowcustomer.html",
         {"request": request, "total_items_table": items}
@@ -126,7 +127,7 @@ async def item_form(request: Request):
 
 
 
-@app.post("/itemsshowowner", response_class=HTMLResponse)
+@app.get("/itemsshowowner", response_class=HTMLResponse)
 async def item_form(request: Request):
     items=retrieve_owner_item()
     return templates.TemplateResponse(
@@ -136,13 +137,15 @@ async def item_form(request: Request):
 
 
 
-@app.post("/customerdetails", response_class=HTMLResponse)
+@app.get("/customerdetails", response_class=HTMLResponse)
 async def cust_form(request: Request):
-    details=retrieve_cust_detail()
+    details = retrieve_cust_detail()
+    print(details)
     return templates.TemplateResponse(
         "customer_details.html",
-        {"request": request, "total_items_table": details}
+        {"request": request, "cust_details": details}
     )
+
 
 if __name__ == "__main__":
     import uvicorn

@@ -29,16 +29,21 @@ def retrieve_customer_item(user):
     """
     try:
         # Retrieve customer name and their items by joining customers and items tables on item_id
-        cursor.execute("SELECT * from items where custid=%s",(user,))
+        cursor.execute("SELECT * from items where custid = %s",(user))
         items = cursor.fetchall()
+        print(items)
         return items
     except mysql.connector.Error:
         return None  # Error occurred while retrieving owner items
 
 def retrieve_cust_detail():
+    """
+    Method to show the details of the large table from the inventory database.
+    """
     try:
-        cursor.execute("select * from customer")
-        cust=cursor.fetchall()
-        return cust
+        # Fetch details of the large table from the inventory database
+        cursor.execute("SELECT * FROM customer")
+        large_table_details = cursor.fetchall()
+        return large_table_details
     except mysql.connector.Error:
-        return None
+        return None  # Error occurred while fetching large table details

@@ -33,14 +33,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for customer in customers %}
+            {% for customer in cust_details %}
             <tr>
-                <td>{{ customer.id }}</td>
-                <td>{{ customer.name }}</td>
-                <td>{{ customer.phonenumber }}</td>
-                <td>{{ customer.email }}</td>
-                <td>{{ customer.password }}</td>
-                <td>{{ customer.itemid }}</td>
+                <td>{{ customer[0] }}</td>
+                <td>{{ customer[1] }}</td>
+                <td>{{ customer[2] }}</td>
+                <td>{{ customer[3] }}</td>
+                <td>{{ customer[4] }}</td>
+                <td>{{ customer[5] }}</td>
             </tr>
             {% endfor %}
         </tbody>

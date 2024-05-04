@@ -36,17 +36,17 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in items %}
+            {% for item in total_items_table %}
             <tr>
-                <td>{{ item.itemid }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.expiry }}</td>
-                <td>{{ item.size }}</td>
-                <td>{{ item.position }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>{{ item.perishable }}</td>
-                <td>{{ item.type }}</td>
-                <td>{{ item.custid }}</td>
+                <td>{{ item[0] }}</td>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                <td>{{ item[3] }}</td>
+                <td>{{ item[4] }}</td>
+                <td>{{ item[5] }}</td>
+                <td>{{ item[6] }}</td>
+                <td>{{ item[7] }}</td>
+                <td>{{ item[8] }}</td>
             </tr>
             {% endfor %}
         </tbody>
