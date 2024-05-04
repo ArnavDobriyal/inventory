@@ -15,12 +15,12 @@ def authenticate(name, password):
     cursor.execute("SELECT password FROM customer WHERE name = %s", (name,))
     fetched_password = cursor.fetchone()
     print(name)
-    if fetched_password and fetched_password[0] == password:
+    if fetched_password[0] == password:
         cursor.execute("SELECT id FROM customer WHERE name = %s", (name,))
         id = cursor.fetchone()
         return id
     else:
-        return False
+        return None
 
 def get_name(id):
     cursor.execute("SELECT name FROM customer WHERE id = %s", id)

@@ -8,68 +8,67 @@
 <body>
     <h1>Inventory Owner</h1>
 
-    <h2>Total Filled</h2>
+    <h2>Total Filled Items: {{ total_filled }}</h2>
+
+    <h2>Small Filled Table</h2>
     <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <!-- Add more table headers as needed -->
-        </tr>
-        {% for row in total_filled_table %}
-        <tr>
-            <td>{{ row.id }}</td>
-            <td>{{ row.name }}</td>
-            <!-- Add more table cells as needed -->
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>Column 1</th>
+                <th>Column 2</th>
+                <!-- Add more column headers if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in small_filled_table %}
+            <tr>
+                <td>{{ row.column1 }}</td>
+                <td>{{ row.column2 }}</td>
+                <!-- Add more columns if needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
-    <h2>Small Filled</h2>
+    <h2>Large Filled Table</h2>
     <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <!-- Add more table headers as needed -->
-        </tr>
-        {% for row in small_filled_table %}
-        <tr>
-            <td>{{ row.id }}</td>
-            <td>{{ row.name }}</td>
-            <!-- Add more table cells as needed -->
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>Column 1</th>
+                <th>Column 2</th>
+                <!-- Add more column headers if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in large_filled_table %}
+            <tr>
+                <td>{{ row.column1 }}</td>
+                <td>{{ row.column2 }}</td>
+                <!-- Add more columns if needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
-    <h2>Large Filled</h2>
+    <h2>Fridge Filled Table</h2>
     <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <!-- Add more table headers as needed -->
-        </tr>
-        {% for row in large_filled_table %}
-        <tr>
-            <td>{{ row.id }}</td>
-            <td>{{ row.name }}</td>
-            <!-- Add more table cells as needed -->
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>Column 1</th>
+                <th>Column 2</th>
+                <!-- Add more column headers if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in fridge_filled_table %}
+            <tr>
+                <td>{{ row.column1 }}</td>
+                <td>{{ row.column2 }}</td>
+                <!-- Add more columns if needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
-    <h2>Fridge Filled</h2>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <!-- Add more table headers as needed -->
-        </tr>
-        {% for row in fridge_filled_table %}
-        <tr>
-            <td>{{ row.id }}</td>
-            <td>{{ row.name }}</td>
-            <!-- Add more table cells as needed -->
-        </tr>
-        {% endfor %}
-    </table>
 </body>
 </html>

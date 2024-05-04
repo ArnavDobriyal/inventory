@@ -45,21 +45,25 @@ async def signup(request: Request, name: str = Form(...), phonenumber: str = For
 
 @app.post("/login")
 async def login(request: Request, username: str = Form(...), password: str = Form(...)):
-    user_id = authenticate(username, password)
-    user=get_name(user_id)
-    print(f"1{user}")
-    if user:
-        session_manager.user = user_id 
-        return RedirectResponse("/dashboard", status_code=303)
-    else:
+    try:
+        user_id = authenticate(username, password)
+        user=get_name(user_id)
+        print(f"1{user}")
+        if user:
+            session_manager.user = user_id 
+            return RedirectResponse("/dashboard", status_code=303)
+        else:
+            return templates.TemplateResponse("login.html", {"request": request, "message": "Invalid credentials"})
+    except:
         return templates.TemplateResponse("login.html", {"request": request, "message": "Invalid credentials"})
-
+    
+    
 @app.get("/dashboard", response_class=HTMLResponse)
 async def dashboard(request: Request):
     user_id = session_manager.user
     user=get_name(user_id)
     if user:
-        if user == "admin":
+        if user[0] == "admin":
             return templates.TemplateResponse("dashboard_owner.html", {"request": request, "user": user})
         else:
             return templates.TemplateResponse("dashboard_customer.html", {"request": request, "user": user})
@@ -68,10 +72,10 @@ async def dashboard(request: Request):
 
 @app.get("/inventoryowner", response_class=HTMLResponse)
 async def inventorycustomer(request: Request):
-    total_filled_table = total()
-    small_filled_table = small()
-    large_filled_table = large()
-    fridge_filled_table = fridge()
+    total_filled_table = total()# Return the count of items
+    small_filled_table = small()#table is returned
+    large_filled_table = large()#table is returned
+    fridge_filled_table = fridge()#table is returned
     return templates.TemplateResponse(
         "inventoryowner.html",
         {"request": request, "total_filled": total_filled_table, "small_filled_table": small_filled_table, "large_filled_table": large_filled_table, "fridge_filled_table": fridge_filled_table}

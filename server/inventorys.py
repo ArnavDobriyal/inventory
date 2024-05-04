@@ -13,7 +13,7 @@ cursor = conn.cursor()
 def total():
     try:
         # Fetch details of the small table from the inventory database
-        cursor.execute("SELECT COUNT(id) FROM inventory WHERE item IS NULL")
+        cursor.execute("SELECT COUNT(id) FROM large WHERE item IS NULL")
         small_table_details = cursor.fetchone()  # Fetch the first row
         if small_table_details:
             return small_table_details[0]  # Return the count of items
