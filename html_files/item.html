@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Item</title>
+</head>
+<body>
+    <h1>Add Item</h1>
+    <form method="post">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+        
+        <label for="expiry">Expiry:</label><br>
+        <input type="date" id="expiry" name="expiry"><br><br>
+        
+        <label for="size">Size:</label><br>
+        <select id="size" name="size">
+            <option value="large">Large</option>
+            <option value="small">Small</option>
+            <option value="fridge">Fridge</option>
+        </select><br><br>
+        
+        <label for="position">Position:</label><br>
+        <input type="number" id="position" name="position"><br><br>
+        
+        <label for="quantity">Quantity:</label><br>
+        <input type="number" id="quantity" name="quantity"><br><br>
+        
+        <label for="perishable">Perishable:</label><br>
+        <input type="checkbox" id="perishable" name="perishable"><br><br>
+        
+        <label for="type">Type:</label><br>
+        <input type="text" id="type" name="type"><br><br>
+        
+        <button type="submit">Add Item</button>
+    </form>
+</body>
+</html>

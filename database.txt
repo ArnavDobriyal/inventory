@@ -1,0 +1,40 @@
+Customer database - contains customer id (randomly generated), username, email, password, phone number, and all the ids of all the item they entered
+
+Item database - item id, item name, expiry, size, quantity, position in the inventory, check if it is perishable(true or false). If perishable, these following values will be filled and the item will be placed in the fridge, otherwise they will be NULL: veg/non-veg
+
+Inventory system:
+Large database: has 6 quantity of 40*40 size
+Small database: has 24 quantity of 20*20 size
+Fridge database: has 24 quantity of 10*10 size
+
+customer:-
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id          | int          | NO   | PRI | NULL    |       |
+| name        | varchar(10)  | YES  |     | NULL    |       |
+| phonenumber | int          | YES  |     | NULL    |       |
+| email       | varchar(320) | YES  |     | NULL    |       |
+| password    | varchar(10)  | YES  |     | NULL    |       |
+| itemid      | int          | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+item:-
++------------+--------------------------------+------+-----+---------+-------+
+| Field      | Type                           | Null | Key | Default | Extra |
++------------+--------------------------------+------+-----+---------+-------+
+| itemid     | int                            | YES  |     | NULL    |       |
+| name       | varchar(255)                   | YES  |     | NULL    |       |
+| expiry     | date                           | YES  |     | NULL    |       |
+| size       | enum('large','small','fridge') | YES  |     | NULL    |       |
+| position   | int                            | YES  |     | NULL    |       |
+| quantity   | int                            | YES  |     | NULL    |       |
+| perishable | tinyint(1)                     | YES  |     | NULL    |       |
+| type       | varchar(255)                   | YES  |     | NULL    |       |
++------------+--------------------------------+------+-----+---------+-------+
+fridge,large,small-
++--------+------+------+-----+---------+----------------+
+| Field  | Type | Null | Key | Default | Extra          |
++--------+------+------+-----+---------+----------------+
+| id     | int  | NO   | PRI | NULL    | auto_increment |
+| itemid | int  | YES  |     | NULL    |                |
++--------+------+------+-----+---------+----------------+

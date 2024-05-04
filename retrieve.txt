@@ -1,0 +1,72 @@
+# retrieve.py
+import mysql.connector
+
+# Establishing connection to the MySQL database
+conn = mysql.connector.connect(
+    host="localhost",
+    port="3307",
+    user="root",
+    password="password",
+    database="your_database"
+)
+cursor = conn.cursor()
+
+def retrieve_customer_details():
+    """
+    Retrieve the list of all customer details from the database.
+    """
+    try:
+        # Retrieve all customer details
+        cursor.execute("SELECT * FROM customers")
+        customer_details = cursor.fetchall()
+        return customer_details
+    except mysql.connector.Error:
+        return None  # Error occurred while retrieving customer details
+
+def retrieve_owner_item():
+    """
+    Allow the owner to see the name of the customer and the list of items they have by matching the item_id in both databases.
+    """
+    try:
+        # Retrieve customer name and their items by joining customers and items tables on item_id
+        cursor.execute("SELECT c.name, i.* FROM customers c JOIN items i ON c.item_id = i.id")
+        owner_items = cursor.fetchall()
+        return owner_items
+    except mysql.connector.Error:
+        return None  # Error occurred while retrieving owner items
+
+def retrieve_customer_item(customer_id):
+    """
+    Retrieve the list of items and their details for a specific customer identified by their customer ID.
+    """
+    try:
+        # Retrieve items and their details for the specific customer
+        cursor.execute("SELECT i.* FROM items i JOIN customers c ON i.id = c.item_id WHERE c.id = %s", (customer_id,))
+        customer_items = cursor.fetchall()
+        return customer_items
+    except mysql.connector.Error:
+        return None  # Error occurred while retrieving customer items
+
+def retrieve_customer_replenish(customer_id):
+    """
+    Retrieve items of the customer that have a quantity less than 2.
+    """
+    try:
+        # Retrieve items with quantity less than 2 for the specific customer
+        cursor.execute("SELECT i.* FROM items i JOIN customers c ON i.id = c.item_id WHERE c.id = %s AND i.quantity < 2", (customer_id,))
+        replenish_items = cursor.fetchall()
+        return replenish_items
+    except mysql.connector.Error:
+        return None  # Error occurred while retrieving replenish items
+
+def retrieve_owner_replenish():
+    """
+    Retrieve items of all customers that have a quantity less than 2.
+    """
+    try:
+        # Retrieve items with quantity less than 2 for all customers
+        cursor.execute("SELECT i.*, c.name AS customer_name FROM items i JOIN customers c ON i.id = c.item_id WHERE i.quantity < 2")
+        owner_replenish_items = cursor.fetchall()
+        return owner_replenish_items
+    except mysql.connector.Error:
+        return None  # Error occurred while retrieving owner replenish items

@@ -16,6 +16,13 @@ def authenticate(name, password):
     fetched_password = cursor.fetchone()
     print(name)
     if fetched_password and fetched_password[0] == password:
-        return name
+        cursor.execute("SELECT id FROM customer WHERE name = %s", (name,))
+        id = cursor.fetchone()
+        return id
     else:
         return False
+
+def get_name(id):
+    cursor.execute("SELECT name FROM customer WHERE id = %s", id)
+    name = cursor.fetchone()
+    return name
