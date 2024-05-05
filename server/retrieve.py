@@ -80,13 +80,15 @@ def owner_expiry():
     """
     try:
         # Fetch expired items from the items table
-        cursor.execute("SELECT item_id, cust_id, expiry FROM items WHERE expiry < CURDATE()")
+        cursor.execute("SELECT itemid, custid, expiry FROM items WHERE expiry < CURDATE()")
         expired_items = cursor.fetchall()
 
         expired_item_ids = [item[0] for item in expired_items]
         customer_ids = [item[1] for item in expired_items]
-
+        print(expired_item_ids)
+        print(customer_ids)
         return expired_item_ids, customer_ids
+    
     except mysql.connector.Error as err:
         print("Error:", err)
         return None, None
@@ -102,10 +104,12 @@ def customer_expiry(customer_id):
         expired_item_ids = []
         # Check expiry date for each item associated with the customer
         for item_id in item_ids:
-            cursor.execute("SELECT expiry FROM items WHERE itemid = %s AND expiry < CURDATE()", (item_id[0]))
+            cursor.execute("SELECT expiry,name FROM items WHERE itemid = %s AND expiry < CURDATE()", (item_id))
             expiry_date = cursor.fetchone()
             if expiry_date:
-                expired_item_ids.append(item_id[0])
+                expired_item_ids.append((item_id, expiry_date))
+        print(expired_item_ids)
+        print("a")
         return expired_item_ids
     except mysql.connector.Error as err:
         print("Error:", err)

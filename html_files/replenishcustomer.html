@@ -18,8 +18,8 @@
             {% if ret_details  %}
                 {% for detail in ret_details %}
                 <tr>
-                    <td>{{ detail.name }}</td>
-                    <td>{{ detail.quantity }}</td>
+                    <td>{{ detail[0] }}</td>
+                    <td>{{ detail[1] }}</td>
                 </tr>
                 {% endfor %}
             {% else %}

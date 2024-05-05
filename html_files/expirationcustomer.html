@@ -3,32 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expired Items</title>
+    <title>Expired Items for Customer</title>
 </head>
 <body>
-    <h1>Expired Items</h1>
+    <h1>Expired Items for Customer</h1>
     <table border="1">
         <thead>
             <tr>
                 <th>Item ID</th>
-                <th>Customer ID</th>
                 <th>Expiry Date</th>
+                <th>Additional Information</th>
             </tr>
         </thead>
         <tbody>
-            {% if ret_details %}
-                {% for item_id, customer_id, expiry_date in ret_details %}
-                <tr>
-                    <td>{{ item_id }}</td>
-                    <td>{{ customer_id }}</td>
-                    <td>{{ expiry_date }}</td>
-                </tr>
-                {% endfor %}
-            {% else %}
-                <tr>
-                    <td colspan="3">No expired items found.</td>
-                </tr>
-            {% endif %}
+            {% for item in ret_details %}
+            <tr>
+                <td>{{ item[0][0] }}</td> <!-- Item ID -->
+                <td>{{ item[1][0] }}</td> <!-- Expiry Date -->
+                <td>{{ item[1][1] }}</td> <!-- Additional Information -->
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </body>

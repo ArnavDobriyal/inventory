@@ -155,6 +155,7 @@ async def replenicustomer(request: Request):
     # Retrieve expired items for a specific customer
     user_id = session_manager.user
     details = customer_expiry(user_id)
+    print(details)
     return templates.TemplateResponse(
         "expirationcustomer.html",
         {"request": request, "ret_details": details}
@@ -164,7 +165,7 @@ async def replenicustomer(request: Request):
 async def replenicustomer(request: Request):
     # Retrieve expired items for the owner
     user_id = session_manager.user
-    details = owner_expiry()
+    details,cust_id = owner_expiry()
     return templates.TemplateResponse(
         "expirationowner.html",
         {"request": request, "ret_details": details}
