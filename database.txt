@@ -30,6 +30,7 @@ item:-
 | quantity   | int                            | YES  |     | NULL    |       |
 | perishable | tinyint(1)                     | YES  |     | NULL    |       |
 | type       | varchar(255)                   | YES  |     | NULL    |       |
+| custid     | int                            | YES  |     | NULL    |       |
 +------------+--------------------------------+------+-----+---------+-------+
 fridge,large,small-
 +--------+------+------+-----+---------+----------------+

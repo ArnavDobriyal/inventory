@@ -23,6 +23,6 @@ def authenticate(name, password):
         return None
 
 def get_name(id):
-    cursor.execute("SELECT name FROM customer WHERE id = %s", id)
+    cursor.execute("SELECT name FROM customer WHERE id = %s", (id))
     name = cursor.fetchone()
     return name

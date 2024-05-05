@@ -3,25 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Replenish Details</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <title>Replenish Customer</title>
 </head>
 <body>
-    <h1>Replenish Details</h1>
-    <table>
+    <h1>Replenish Customer</h1>
+    <table border="1">
         <thead>
             <tr>
                 <th>Name</th>
@@ -29,12 +15,18 @@
             </tr>
         </thead>
         <tbody>
-            {% for detail in ret_details %}
-            <tr>
-                <td>{{ detail[0] }}</td>
-                <td>{{ detail[1] }}</td>
-            </tr>
-            {% endfor %}
+            {% if ret_details  %}
+                {% for detail in ret_details %}
+                <tr>
+                    <td>{{ detail.name }}</td>
+                    <td>{{ detail.quantity }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="2">No items to replenish</td>
+                </tr>
+            {% endif %}
         </tbody>
     </table>
 </body>

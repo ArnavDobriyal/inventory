@@ -54,12 +54,13 @@ def retrieve_customer_replenish(customer_id):
     Retrieve items with quantity less than 2 for a given customer.
     """
     try:
-        cursor.execute("SELECT name, quantity FROM items WHERE customer_id = %s AND quantity < 2", (customer_id,))
+        cursor.execute("SELECT name, quantity FROM items WHERE custid = %s AND quantity < 2", (customer_id))
         items = cursor.fetchall()
         return items
     except mysql.connector.Error as err:
         print("Error:", err)
         return None
+
     
 def retrieve_owner_replenish():
     """
@@ -79,18 +80,11 @@ def owner_expiry():
     """
     try:
         # Fetch expired items from the items table
-        cursor.execute("SELECT item_id, expiry FROM items WHERE expiry < CURDATE()")
+        cursor.execute("SELECT item_id, cust_id, expiry FROM items WHERE expiry < CURDATE()")
         expired_items = cursor.fetchall()
 
         expired_item_ids = [item[0] for item in expired_items]
-
-        # Fetch customer ids associated with expired items
-        customer_ids = []
-        for item_id in expired_item_ids:
-            cursor.execute("SELECT id FROM customers WHERE item_id = %s", (item_id,))
-            customer_id = cursor.fetchone()
-            if customer_id:
-                customer_ids.append(customer_id[0])
+        customer_ids = [item[1] for item in expired_items]
 
         return expired_item_ids, customer_ids
     except mysql.connector.Error as err:
@@ -102,24 +96,18 @@ def customer_expiry(customer_id):
     Check for expired items associated with a specific customer and return their item id.
     """
     try:
-        # Fetch item ids associated with the customer from the customer table
-        cursor.execute("SELECT item_ids FROM customers WHERE id = %s", (customer_id,))
-        item_ids_str = cursor.fetchone()[0]
-        if item_ids_str:
-            item_ids = item_ids_str.split(",")  # Convert comma-separated string to list
-        else:
-            return []
-
+        # Fetch item ids associated with the customer from the items table
+        cursor.execute("SELECT itemid FROM items WHERE custid = %s", (customer_id))
+        item_ids = cursor.fetchall()
         expired_item_ids = []
-
         # Check expiry date for each item associated with the customer
         for item_id in item_ids:
-            cursor.execute("SELECT expiry FROM items WHERE item_id = %s AND expiry < CURDATE()", (item_id,))
+            cursor.execute("SELECT expiry FROM items WHERE itemid = %s AND expiry < CURDATE()", (item_id[0]))
             expiry_date = cursor.fetchone()
             if expiry_date:
-                expired_item_ids.append(item_id)
-
+                expired_item_ids.append(item_id[0])
         return expired_item_ids
     except mysql.connector.Error as err:
         print("Error:", err)
         return None
+
