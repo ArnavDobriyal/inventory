@@ -24,7 +24,6 @@
     <table>
         <thead>
             <tr>
-
                 <th>Name</th>
                 <th>Quantity</th>
             </tr>
@@ -32,8 +31,8 @@
         <tbody>
             {% for detail in ret_details %}
             <tr>
+                <td>{{ detail[0] }}</td>
                 <td>{{ detail[1] }}</td>
-                <td>{{ detail[5] }}</td>
             </tr>
             {% endfor %}
         </tbody>

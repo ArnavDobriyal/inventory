@@ -5,7 +5,7 @@ from enum import Enum
 from auth import authenticate,get_name
 from insert_sql import insert_customer,insert_item
 from inventorys import total,small,large,fridge
-from retrieve import retrieve_customer_item,retrieve_owner_item,retrieve_cust_detail
+from retrieve import retrieve_customer_item,retrieve_owner_item,retrieve_cust_detail,retrieve_owner_replenish,retrieve_customer_replenish,customer_expiry,owner_expiry
 app = FastAPI()
 templates = Jinja2Templates(directory="clgproject/inventory/html_files")
 
@@ -144,6 +144,44 @@ async def cust_form(request: Request):
     return templates.TemplateResponse(
         "customer_details.html",
         {"request": request, "cust_details": details}
+    )
+
+@app.get("/replenishowner", response_class=HTMLResponse)
+async def replenishowner(request: Request):
+    details = retrieve_owner_replenish()
+    print(details)
+    return templates.TemplateResponse(
+        "replenishowner.html",
+        {"request": request, "ret_details": details}
+    )
+
+@app.get("/replenishcustomer", response_class=HTMLResponse)
+async def replenicustomer(request: Request):
+    user_id = session_manager.user
+    details = retrieve_customer_replenish(user_id)
+    print(details)
+    return templates.TemplateResponse(
+        "replenishcustomer.html",
+        {"request": request, "ret_details": details}
+    )
+@app.get("/expirationcustomer", response_class=HTMLResponse)
+async def replenicustomer(request: Request):
+    user_id = session_manager.user
+    details = customer_expiry(user_id)
+    print(details)
+    return templates.TemplateResponse(
+        "expirationcustomer.html",
+        {"request": request, "ret_details": details}
+    )
+
+@app.get("/expirationowner", response_class=HTMLResponse)
+async def replenicustomer(request: Request):
+    user_id = session_manager.user
+    details = owner_expiry(user_id)
+    print(details)
+    return templates.TemplateResponse(
+        "expirationowner.html",
+        {"request": request, "ret_details": details}
     )
 
 
