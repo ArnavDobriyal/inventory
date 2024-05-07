@@ -65,16 +65,32 @@ def insert_item(name, expiry, size, quantity, perishable, types, user_id):
     """
     Function to insert a new item into the database.
     """
-    item_id = generate_random_id()
-    while not is_item_id_unique(item_id):
-        item_id = generate_random_id()
     try:
-        cursor.execute("INSERT INTO items (itemid, name, expiry, size, quantity, perishable, type, custid) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                       (item_id, name, expiry, size, quantity, perishable, types, user_id[0]))
-        conn.commit()
-        return item_id  # Return the generated item ID
+        # Check if an item with the same name and custid exists
+        cursor.execute("SELECT itemid, quantity FROM items WHERE name = %s AND custid = %s", (name, user_id[0]))
+        existing_item = cursor.fetchone()
+
+        if existing_item:
+            # If an existing item is found, update its quantity
+            item_id = existing_item[0]
+            existing_quantity = existing_item[1]
+            new_quantity = existing_quantity + quantity
+            cursor.execute("UPDATE items SET quantity = %s WHERE itemid = %s", (new_quantity, item_id))
+            conn.commit()
+            return item_id  # Return the item ID of the updated item
+        else:
+            # If no existing item found, insert the new item
+            item_id = generate_random_id()
+            while not is_item_id_unique(item_id):
+                item_id = generate_random_id()
+            cursor.execute("INSERT INTO items (itemid, name, expiry, size, quantity, perishable, type, custid) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                           (item_id, name, expiry, size, quantity, perishable, types, user_id[0]))
+            conn.commit()
+            return item_id  # Return the generated item ID
+
     except mysql.connector.Error:
-        return None  # Failed to insert item
+        return None  # Failed to insert/update item
+
 
 
     

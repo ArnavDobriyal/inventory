@@ -30,6 +30,7 @@
                 <th>Email</th>
                 <th>Password</th>
                 <th>Item ID</th>
+                <th>Action</th> <!-- New column for delete button -->
             </tr>
         </thead>
         <tbody>
@@ -41,6 +42,14 @@
                 <td>{{ customer[3] }}</td>
                 <td>{{ customer[4] }}</td>
                 <td>{{ customer[5] }}</td>
+                <td>
+                    <form action="/deletecustomer" method="post">
+                        <!-- Include hidden input field for user ID -->
+                        <input type="hidden" name="user_id" value="{{ customer[0] }}">
+                        <!-- Add a submit button to delete the customer -->
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

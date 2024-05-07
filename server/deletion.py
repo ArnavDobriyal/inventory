@@ -1,4 +1,3 @@
-# deletion.py
 import mysql.connector
 
 # Establishing connection to the MySQL database
@@ -11,26 +10,44 @@ conn = mysql.connector.connect(
 )
 cursor = conn.cursor()
 
-def delete_inventory(item_id):
+def remove_customer_item(user_id, name):
     """
-    Method to remove items from inventory and replace them with NULL.
-    This also removes the corresponding item entry from the item dataset and the item_id from the customer dataset.
+    Remove an item owned by the customer from the item table.
     """
     try:
-        # Get the size of the item to update the inventory space
-        cursor.execute("SELECT size FROM items WHERE id = %s", (item_id,))
-        size = cursor.fetchone()[0]
-        
-        # Remove the item from inventory and replace with NULL
-        cursor.execute("UPDATE inventory SET item_id = NULL WHERE item_id = %s", (item_id,))
-        
-        # Remove the item entry from the items dataset
-        cursor.execute("DELETE FROM items WHERE id = %s", (item_id,))
-        
-        # Update customer's dataset to remove associated item_id
-        cursor.execute("UPDATE customers SET item_id = NULL WHERE item_id = %s", (item_id,))
-        
+        # Execute the DELETE statement
+        cursor.execute("DELETE FROM items WHERE custid = %s AND name = %s", (user_id, name))
+        # Commit the transaction to make the change permanent
         conn.commit()
-        return True  # Deletion successful
-    except mysql.connector.Error:
-        return False  # Deletion failed
+        print("Item deleted successfully.")
+    except mysql.connector.Error as err:
+        print("Error:", err)
+
+def remove_owner_item(item_id, name):
+    """
+    Remove an item from the item table.
+    """
+    try:
+        # Delete the item with the specified item_id and name from the item table
+        cursor.execute("DELETE FROM items WHERE itemid = %s and name = %s", (item_id, name))
+        conn.commit()  # Commit the transaction
+        print("Item removed successfully!")
+    except mysql.connector.Error as err:
+        print("Error:", err)
+
+def remove_customer(customer_id):
+    """
+    Remove a customer and their associated items from the database.
+    """
+    try:
+        # Delete items associated with the customer from the item table
+        cursor.execute("DELETE FROM items WHERE custid = %s ", (customer_id,))
+        
+        # Delete the customer from the customer table
+        cursor.execute("DELETE FROM customer WHERE id = %s ", (customer_id,))
+        
+        conn.commit()  # Commit the transaction
+        print("Customer and associated items removed successfully!")
+    except mysql.connector.Error as err:
+        print("Error:", err)
+

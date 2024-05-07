@@ -9,10 +9,10 @@ from auth import authenticate, get_name
 from insert_sql import insert_customer, insert_item
 from inventorys import total, small, large, fridge
 from retrieve import retrieve_customer_item, retrieve_owner_item, retrieve_cust_detail, retrieve_owner_replenish, retrieve_customer_replenish, customer_expiry, owner_expiry
-
+from deletion import remove_customer_item,remove_owner_item,remove_customer
 # Creating FastAPI instance
 app = FastAPI()
-templates = Jinja2Templates(directory="clgproject/inventory/html_files")
+templates = Jinja2Templates(directory="C:/Users/dobri/programs/clgproject/inventory/html_files")
 
 # Singleton class to manage session user
 class SessionManager:
@@ -81,6 +81,7 @@ async def dashboard(request: Request):
 async def inventorycustomer(request: Request):
     # Retrieve inventory details for the owner
     total_filled_table = total()
+    print(total_filled_table)
     small_filled_table = small()
     large_filled_table = large()
     fridge_filled_table = fridge()
@@ -100,7 +101,7 @@ async def add_item(request: Request, name: str = Form(...), expiry: str = Form(.
     # Add a new item to the inventory
     user_id = session_manager.user
     insert_item(name, expiry, size, quantity, perishable, type, user_id)
-    return RedirectResponse("/item", status_code=303)
+    return RedirectResponse("/dashboard", status_code=303)
 
 
 @app.get("/itemsshowcustomer", response_class=HTMLResponse)
@@ -165,31 +166,26 @@ async def replenicustomer(request: Request):
 async def replenicustomer(request: Request):
     # Retrieve expired items for the owner
     user_id = session_manager.user
-    details,cust_id = owner_expiry()
+    details = owner_expiry()
     return templates.TemplateResponse(
         "expirationowner.html",
         {"request": request, "ret_details": details}
     )
 
 
-@app.get("/deletecustomer", response_class=HTMLResponse)
-async def replenicustomer(request: Request):
-    # Retrieve expired items for the owner
+@app.post("/deleteitemcustomer")
+async def deleteitem(request: Request, name: str = Form(...)):
     user_id = session_manager.user
-    details = owner_expiry(user_id)
-    return templates.TemplateResponse(
-        "expirationowner.html",
-        {"request": request, "ret_details": details}
-    )
-@app.get("/deleteitem", response_class=HTMLResponse)
-async def replenicustomer(request: Request):
-    # Retrieve expired items for the owner
-    user_id = session_manager.user
-    details = owner_expiry(user_id)
-    return templates.TemplateResponse(
-        "expirationowner.html",
-        {"request": request, "ret_details": details}
-    )
+    print(user_id)
+    remove_customer_item(user_id[0], name)
+    return RedirectResponse("/dashboard", status_code=303)
+
+
+@app.post("/deletecustomer")
+async def delete_item(request: Request,  user_id: str = Form(...)):
+    remove_customer(user_id)
+    # Redirect to the route for displaying items, passing user_id in query parameter
+    return RedirectResponse("customerdetails", status_code=303)
 
 
 # Running the FastAPI application

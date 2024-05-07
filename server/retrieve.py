@@ -76,22 +76,21 @@ def retrieve_owner_replenish():
     
 def owner_expiry():
     """
-    Check for expired items and return their item id along with the customer id.
+    Check for expired items and return their item id along with the customer id as a list of tuples.
     """
     try:
         # Fetch expired items from the items table
-        cursor.execute("SELECT itemid, custid, expiry FROM items WHERE expiry < CURDATE()")
+        cursor.execute("SELECT itemid, name,custid, expiry FROM items WHERE expiry < CURDATE()")
         expired_items = cursor.fetchall()
 
-        expired_item_ids = [item[0] for item in expired_items]
-        customer_ids = [item[1] for item in expired_items]
-        print(expired_item_ids)
-        print(customer_ids)
-        return expired_item_ids, customer_ids
+        expired_item_customer_pairs = [(item[0], item[1],item[2],item[3]) for item in expired_items]
+        print(expired_item_customer_pairs)
+        return expired_item_customer_pairs
     
     except mysql.connector.Error as err:
         print("Error:", err)
-        return None, None
+        return None
+
     
 def customer_expiry(customer_id):
     """

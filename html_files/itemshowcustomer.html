@@ -33,6 +33,7 @@
                 <th>Perishable</th>
                 <th>Type</th>
                 <th>Customer ID</th>
+                <th>Action</th> <!-- Added Action column for delete button -->
             </tr>
         </thead>
         <tbody>
@@ -48,11 +49,19 @@
                     <td>{{ row[6] }}</td>
                     <td>{{ row[7] }}</td>
                     <td>{{ row[8] }}</td>
+                    <td>
+                        <form action="/deleteitemcustomer" method="post">
+                            <!-- Include hidden input fields for item name -->
+                            <input type="hidden" name="name" value="{{ row[1] }}">
+                            <!-- Add a submit button to delete the item -->
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             {% else %}
                 <tr>
-                    <td colspan="9">No items available</td>
+                    <td colspan="10">No items available</td>
                 </tr>
             {% endif %}
         </tbody>

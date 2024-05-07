@@ -24,8 +24,11 @@
         <label for="quantity">Quantity:</label><br>
         <input type="number" id="quantity" name="quantity" required><br><br>
         
-        <label for="perishable">Perishable:</label><br>
-        <input type="checkbox" id="perishable" name="perishable"><br><br>
+        <input type="radio" id="perishable" name="perishable" value="1">
+        <label for="perishable">Perishable</label><br>
+        <input type="radio" id="non_perishable" name="perishable" value="0">
+        <label for="non_perishable">Non-Perishable</label><br>
+
         
         <label for="type">Type:</label><br>
         <select id="type" name="type" required>
