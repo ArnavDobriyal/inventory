@@ -4,39 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Item Form</title>
+    <style>
+        /* CSS styles for the navigation bar */
+        /* Add your CSS styles for the navigation bar here */
+        header {
+            background-color: #333;
+            padding: 10px 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
 <body>
-    <h1>Add Item</h1>
-    <form action="/add_item" method="post">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
-        
-        <label for="expiry">Expiry:</label><br>
-        <input type="date" id="expiry" name="expiry" required><br><br>
-        
-        <label for="size">Size:</label><br>
-        <select id="size" name="size" required>
-            <option value="large">Large</option>
-            <option value="small">Small</option>
-            <option value="fridge">Fridge</option>
-        </select><br><br>
-        
-        <label for="quantity">Quantity:</label><br>
-        <input type="number" id="quantity" name="quantity" required><br><br>
-        
-        <input type="radio" id="perishable" name="perishable" value="1">
-        <label for="perishable">Perishable</label><br>
-        <input type="radio" id="non_perishable" name="perishable" value="0">
-        <label for="non_perishable">Non-Perishable</label><br>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/replenishcustomer">Replenish Stock</a></li>
+                <li><a href="/expirationcustomer">Monitor Expiration Dates</a></li>
+                <li><a href="/item">Item Input</a></li>
+                <li><a href="/itemsshowcustomer">Current Items</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Add Item</h1>
+        <form action="/add_item" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="expiry">Expiry:</label>
+            <input type="date" id="expiry" name="expiry" required>
+            
+            <label for="size">Size:</label>
+            <select id="size" name="size" required>
+                <option value="large">Large</option>
+                <option value="small">Small</option>
+                <option value="fridge">Fridge</option>
+            </select>
+            
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required>
+            
+            <input type="radio" id="perishable" name="perishable" value="1">
+            <label for="perishable">Perishable</label>
+            <input type="radio" id="non_perishable" name="perishable" value="0">
+            <label for="non_perishable">Non-Perishable</label>
 
-        
-        <label for="type">Type:</label><br>
-        <select id="type" name="type" required>
-            <option value="veg">Veg</option>
-            <option value="nonveg">Nonveg</option>
-        </select><br><br>
-        
-        <input type="submit" value="Submit">
-    </form>
+            <label for="type">Type:</label>
+            <select id="type" name="type" required>
+                <option value="veg">Veg</option>
+                <option value="nonveg">Nonveg</option>
+            </select>
+            
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 </body>
 </html>
