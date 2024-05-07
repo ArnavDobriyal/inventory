@@ -39,3 +39,7 @@ fridge,large,small-
 | id     | int  | NO   | PRI | NULL    | auto_increment |
 | itemid | int  | YES  |     | NULL    |                |
 +--------+------+------+-----+---------+----------------+
+
+
+user =admin password=admin
+user = cust_1 password = cust_1
