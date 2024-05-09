@@ -5,14 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory Owner</title>
     <style>
+        /* CSS styles for the navigation bar */
+        header {
+            background-color: #333;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #555;
+        }
+
+        /* Additional styles for the table */
         .table-container {
             display: flex;
             justify-content: space-between;
+            margin-top: 20px;
         }
 
         .table-container table {
             border-collapse: collapse;
-            width: 48%; /* Adjust width as needed */
+            width: 30%; /* Adjust width as needed */
         }
 
         .table-container th, .table-container td {
@@ -32,9 +64,25 @@
         .table-container tr:hover {
             background-color: #dddddd;
         }
+
+        h1, h2 {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/inventoryowner">View Inventory</a></li>
+                <li><a href="/customerdetails">Customer details</a></li>
+                <li><a href="/replenishowner">Replenish Stock</a></li>
+                <li><a href="/expirationowner">Monitor Expiration Dates</a></li>
+                <li><a href="/itemsshowowner">Show items</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <h1>Inventory Owner</h1>
 
     <h2>Total Filled Items: {{ total_filled }}</h2>
@@ -83,9 +131,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
 
-    <div class="table-container">
         <div>
             <h2>Fridge Filled Table</h2>
             <table>
