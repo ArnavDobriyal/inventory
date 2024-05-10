@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Owner Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,47 +20,83 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         h1, h2 {
             color: #333;
-            text-align: center;
+            margin-bottom: 20px;
         }
 
         ul {
             list-style-type: none;
             padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         li {
-            margin-bottom: 10px;
+            margin: 10px;
         }
 
         a {
             display: block;
-            padding: 10px;
+            padding: 20px;
             text-decoration: none;
             color: #333;
             background-color: #f0f0f0;
-            border-radius: 5px;
+            border-radius: 8px;
             transition: background-color 0.3s ease;
+            width: 200px;
         }
 
         a:hover {
             background-color: #e0e0e0;
         }
+
+        .icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome, {{ user.username }}</h1>
+        <h1>Welcome, {{ user[0] }}</h1>
         <h2>Owner Dashboard</h2>
         <ul>
-            <li><a href="/inventoryowner">View Inventory</a></li>
-            <li><a href="/customerdetails">Customer details</a></li>
-            <li><a href="/replenishowner">Replenish Stock</a></li>
-            <li><a href="/expirationowner">Monitor Expiration Dates</a></li>
-            <li><a href="/itemsshowowner">Show items</a></li>
+            <li>
+                <a href="/inventoryowner">
+                    <i class="fas fa-box icon"></i><br>
+                    View Inventory
+                </a>
+            </li>
+            <li>
+                <a href="/customerdetails">
+                    <i class="fas fa-users icon"></i><br>
+                    Customer Details
+                </a>
+            </li>
+            <li>
+                <a href="/replenishowner">
+                    <i class="fas fa-plus-circle icon"></i><br>
+                    Replenish Stock
+                </a>
+            </li>
+            <li>
+                <a href="/expirationowner">
+                    <i class="fas fa-calendar-alt icon"></i><br>
+                    Monitor Expiration 
+                </a>
+            </li>
+            <li>
+                <a href="/itemsshowowner">
+                    <i class="fas fa-list icon"></i><br>
+                    Show Items
+                </a>
+            </li>
         </ul>
     </div>
 </body>

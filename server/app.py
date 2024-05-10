@@ -71,8 +71,10 @@ async def dashboard(request: Request):
     user = get_name(user_id)
     if user:
         if user[0] == "admin":
+            print(user)
             return templates.TemplateResponse("dashboard_owner.html", {"request": request, "user": user})
         else:
+            print(user)
             return templates.TemplateResponse("dashboard_customer.html", {"request": request, "user": user})
     else:
         return RedirectResponse("/", status_code=303)

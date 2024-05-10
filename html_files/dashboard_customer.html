@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Owner Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,47 +20,61 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        h1, h2 {
-            color: #333;
             text-align: center;
         }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
+        h1 {
             color: #333;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
         }
 
-        a:hover {
+        .dashboard-item {
+            margin-bottom: 20px;
+            display: inline-block;
+            width: 200px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dashboard-item:hover {
             background-color: #e0e0e0;
+        }
+
+        .dashboard-item i {
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .dashboard-item p {
+            margin: 0;
+            color: #333;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome, {{ user.username }}</h1>
-        <h2>customer Dashboard</h2>
-        <ul>
-            <li><a href="/replenishcustomer">Replenish Stock</a></li>
-            <li><a href="/expirationcustomer">Monitor Expiration Dates</a></li>
-            <li><a href="/item">item_input</a></li>
-            <li><a href="/itemsshowcustomer">current items</a></li>
-        </ul>
+        <h1>Welcome, {{ user[0] }}</h1>
+        <a href="/replenishcustomer" class="dashboard-item">
+            <i class="fas fa-box"></i>
+            <p>Replenish Stock</p>
+        </a>
+        <a href="/expirationcustomer" class="dashboard-item">
+            <i class="fas fa-calendar-alt"></i>
+            <p>Monitor Expiration Dates</p>
+        </a>
+        <a href="/item" class="dashboard-item">
+            <i class="fas fa-plus"></i>
+            <p>Item Input</p>
+        </a>
+        <a href="/itemsshowcustomer" class="dashboard-item">
+            <i class="fas fa-list"></i>
+            <p>Current Items</p>
+        </a>
     </div>
 </body>
 </html>
