@@ -5,7 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expired Items for Owner</title>
     <style>
-        /* CSS styles for the navigation bar */
+        /* Reset default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        /* Header styles */
         header {
             background-color: #333;
             padding: 10px 0;
@@ -26,7 +40,7 @@
         nav ul li a {
             color: #fff;
             text-decoration: none;
-            padding: 5px 10px;
+            padding: 8px 16px;
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
@@ -35,25 +49,40 @@
             background-color: #555;
         }
 
-        /* Additional styles for the table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        /* Grid styles */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-gap: 20px;
             margin-top: 20px;
         }
 
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
+        .grid-item {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+            position: relative;
         }
 
-        th {
-            background-color: #f2f2f2;
+        .grid-item:hover {
+            transform: translateY(-5px);
         }
 
-        h1 {
-            text-align: center;
+        .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 6px 12px;
+            background-color: #f44336;
+            color: #fff;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .item-details {
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -62,33 +91,26 @@
         <nav>
             <ul>
                 <li><a href="/inventoryowner">View Inventory</a></li>
-                <li><a href="/customerdetails">Customer details</a></li>
+                <li><a href="/customerdetails">Customer Details</a></li>
                 <li><a href="/replenishowner">Replenish Stock</a></li>
                 <li><a href="/expirationowner">Monitor Expiration Dates</a></li>
-                <li><a href="/itemsshowowner">Show items</a></li>
+                <li><a href="/itemsshowowner">Show Items</a></li>
             </ul>
         </nav>
     </header>
     <h1>Expired Items for Owner</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Item ID</th>
-                <th>Item name</th>
-                <th>Customer ID</th>
-                <th>Expiry Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in ret_details %}
-            <tr>
-                <td>{{ row[0] }}</td>
-                <td>{{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-                <td>{{ row[3] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="grid-container">
+        {% for row in ret_details %}
+        <div class="grid-item">
+            <span class="badge">Expired</span>
+            <div class="item-details">
+                <p><strong>Item ID:</strong> {{ row[0] }}</p>
+                <p><strong>Item Name:</strong> {{ row[1] }}</p>
+                <p><strong>Customer ID:</strong> {{ row[2] }}</p>
+                <p><strong>Expiry Date:</strong> {{ row[3] }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </body>
 </html>
