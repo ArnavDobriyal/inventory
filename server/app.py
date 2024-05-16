@@ -2,7 +2,13 @@
 from fastapi import FastAPI, Form, Request, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from enum import Enum
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import os
+from dotenv import load_dotenv
+import random
+import string
 
 # Importing authentication functions and database operations
 from auth import authenticate, get_name
@@ -12,7 +18,33 @@ from retrieve import retrieve_customer_item, retrieve_owner_item, retrieve_cust_
 from deletion import remove_customer_item,remove_owner_item,remove_customer
 # Creating FastAPI instance
 app = FastAPI()
-templates = Jinja2Templates(directory="C:/Users/dobri/programs/clgproject/inventory/html_files")
+templates = Jinja2Templates(directory="clgproject/inventory/html_files")
+load_dotenv()
+def generate_verification_code(length=6):
+    """Generate a random verification code of the specified length."""
+    # Define the characters to use for generating the code (digits and uppercase letters)
+    characters = string.digits + string.ascii_uppercase
+    # Generate a random code using the defined characters
+    code = ''.join(random.choices(characters, k=length))
+    return code
+
+def send_verification_email(email, verification_code):
+    # Get email configuration from environment variables
+    sender_email = os.getenv("MAIL_USERNAME")       # Your Gmail address
+    sender_password = os.getenv("MAIL_PASSWORD")    # Your Gmail password
+
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = email
+    message["Subject"] = "Email Verification"
+
+    body = f"Your verification code is: {verification_code}"
+    message.attach(MIMEText(body, "plain"))
+
+    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.sendmail(sender_email, email, message.as_string())
 
 # Singleton class to manage session user
 class SessionManager:
@@ -22,6 +54,7 @@ class SessionManager:
         if not cls._instance:
             cls._instance = super(SessionManager, cls).__new__(cls, *args, **kwargs)
             cls._instance._user = None  # Initialize user session attribute
+            cls._instance._verification_code = None  # Initialize verification code attribute
         return cls._instance
 
     @property
@@ -31,6 +64,14 @@ class SessionManager:
     @user.setter
     def user(self, value):
         self._user = value
+
+    @property
+    def verification_code(self):
+        return self._verification_code
+
+    @verification_code.setter
+    def verification_code(self, value):
+        self._verification_code = value
 
 # Initialize session manager instance
 session_manager = SessionManager()
@@ -45,10 +86,26 @@ async def signup_page(request: Request):
     return templates.TemplateResponse("signup.html", {"request": request})
 
 @app.post("/signup")
-async def signup(request: Request, name: str = Form(...), phonenumber: str = Form(...), email: str = Form(...), password: str = Form(...)):
+async def signup(request: Request, email: str = Form(...)):
     # Insert new customer into the database
-    insert_customer(name, phonenumber, email, password)
-    return RedirectResponse("/", status_code=303)
+    verification_code = generate_verification_code()
+    session_manager.verification_code = verification_code  # Replace with the generated verification code
+    send_verification_email(email, verification_code)
+    return RedirectResponse("/checkverification", status_code=303)
+
+@app.get("/checkverification")
+async def verification_page(request: Request):
+    return templates.TemplateResponse("verification.html", {"request": request})
+
+@app.post("/checkverification")
+async def verf(request: Request, verify: str = Form(...), name: str = Form(...), phonenumber: str = Form(...), email: str = Form(...), password: str = Form(...)):
+    verification_code = session_manager.verification_code  # Replace with the generated verification code
+    print(verification_code)
+    if verify == verification_code:
+        insert_customer(name, phonenumber, email, password)
+        return RedirectResponse("/", status_code=303)
+    else:
+        return templates.TemplateResponse("verification.html", {"request": request, "message": "Unsuccessful"})
 
 @app.post("/login")
 async def login(request: Request, username: str = Form(...), password: str = Form(...)):
